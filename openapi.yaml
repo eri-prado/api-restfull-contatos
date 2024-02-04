@@ -1,0 +1,86 @@
+openapi: 3.0.0
+info:
+  title: API de Contatos
+  version: 1.0.0
+  description: Aplicação para gerenciamento de contatos de pessoas e organizações
+  contact:
+    email: eri.prado@hotmail.com
+    name: Erinaldo Prado
+servers:
+  - url: http://localhost:5500
+    variables: {}
+    description: Servidor Local
+paths:
+  /pessoas:
+    summary: Manipular informacoes relacionadas as pessoas da aplicação
+    get:
+      summary: Listar pessoas cadastradas
+      tags:
+        - Pessoas
+      description: ''
+      operationId: listaPessoas
+      responses:
+        '200':
+          description: Operação bem sucedida
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Pessoa"
+        default:
+          description: Default error sample response
+    post:
+      summary: Cadastrar uma pessoa
+      tags:
+        - Pessoas
+      description: ''
+      operationId: inserePessoa
+      requestBody: 
+          description: "Pessoa a ser inserida"
+          content:
+            aplicattion/json: 
+              schema:
+                $ref: "#/components/schemas/Pessoa"
+      responses:
+        201: 
+          description: Recurso inserido com sucesso
+  /pessoas/{idPessoa}:
+    get:
+      summary: obter uma pessoa específica por meio do ID
+      tags:
+        - Pessoas
+      parameters:
+        - in: path
+        required: true
+        name: idPessoa
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Operação bem sucedida
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pessoa"
+        404:
+          description: Pessoa não encontrada
+          
+components:
+  schemas:
+    Pessoa:
+      type: object
+      properties:
+        nome:
+          type: string
+          description: Nome da referida pessoa
+        email:
+          type: string
+          description: Endereço eletrônico da pessoa
+        telefone:
+          type: string
+          description: Endereço eletrônico da pessoa
+        tags:
+          type: array
+          items:
+            type: string
